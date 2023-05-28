@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>計算機</title>
+    <style>
+        /* CSS */
+        #main {
+
+            border: 2px solid #E5ECEC;
+            padding: 2px;
+            width: 410px;
+            margin: 0 auto;
+        }
+
+        * {
+            font-family: cursive;
+            cursor: url('./flower3.png'), auto;
+             /* <a target="_blank" href="https://icons8.com/icon/46545/%E8%8A%B1">花</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> */
+        }
+
+        html {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        body {
+            background-image: url("./background.webp");
+        }
+
+        #history {
+            text-align: end;
+            border: none;
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            padding: 1px;
+            background-color: #ECEEE6;
+            width: calc(100% - 2px);
+            height: 40px;
+            margin-bottom: 2px;
+        }
+
+        #result {
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            text-align: end;
+            border: none;
+            padding: 1px;
+            background-color: #f1eee6;
+            width: calc(100% - 2px);
+            height: 80px;
+            margin-bottom: 10px;
+
+        }
+
+        .btn-size {
+            width: 23.98%;
+            height: 80px;
+        }
+
+        .circle {
+            border-radius: 100rem;
+            border: none;
+        }
+
+        .circle:hover {
+            opacity: 0.5;
+        }
+
+        .btn-wrapper {
+            margin-bottom: 4px;
+        }
+
+        .btn-wrapper>button {
+            font-size: 40px;
+        }
+
+        .green {
+            background-color: #ECEEE6;
+        }
+
+        .orange {
+            background-color: #EFE8DD;
+        }
+        #box1{
+            border:3px solid #d5e8e8;
+            font-family: cursive;
+            padding-left:10px;
+            padding-right: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- HTML -->
+    <div id="main">
+        <input id="history">
+        </inpput>
+        <input id="result">
+
+        </input>
+        <div class="btn-wrapper">
+            <button class="btn-size circle green " onclick="input('7')">7</button>
+            <button class="btn-size circle orange" onclick="input('8')">8</button>
+            <button class="btn-size circle green" onclick="input('9')">9</button>
+            <button class="btn-size circle orange" onclick="input('÷')">÷</button>
+        </div>
+        <div class="btn-wrapper">
+            <button class="btn-size circle orange" onclick="input('4')">4</button>
+            <button class="btn-size circle green" onclick="input('5')">5</button>
+            <button class="btn-size circle orange" onclick="input('6')">6</button>
+            <button class="btn-size circle green" onclick="input('×')">×</button>
+        </div>
+        <div class="btn-wrapper">
+            <button class="btn-size circle green" onclick="input('1')">1</button>
+            <button class="btn-size circle orange" onclick="input('2')">2</button>
+            <button class="btn-size circle green" onclick="input('3')">3</button>
+            <button class="btn-size circle orange" onclick="input('+')">-</button>
+        </div>
+        <div class="btn-wrapper">
+            <button class="btn-size circle orange" onclick="input('0')">0</button>
+            <button class="btn-size circle green" onclick="clearvalue()">C</button>
+            <button class="btn-size circle orange" onclick="submit('=')">=</button>
+            <button class="btn-size circle green" onclick="input('+')">+</button>
+        </div>
+    </div>
+    <div id="box1">
+        <p>1.背景が可愛くないので、可愛い背景を入れました。著作権も大丈夫です。</p>
+        <p>2.かわいい計算機にしたくて、調べていくうちにしたい形がよくある計算機の形のほうがいいと思いこの方にいしました。</p>
+        <p>3.計算機をセンターにすること、文字を右にすることを工夫しました。</p>
+        <p>4.１つ1つボタンを作って数字を入力ではなくボタンでできるようにしました。</p>
+        <p>5.カーソルがボタンの上にある時は「:hover」で色を薄くして、自分が何のボタンを押そうとしているのがわかりやすく工夫しました。</p>
+        <p>6.ボタンとフォントも可愛くしたかったので、前の学期で教えてもらったもので作りました。</p>
+        <p>7.カーソルも雰囲気に合わせたくてインターネットで調べて「cursor: url」で画像を取ってきてカーソルを変えることも工夫しました。</p>
+        <p>8.計算した過去の履歴も残したくて「function」で履歴が見えるように作りました。</p>
+        <p>9.ボタンで「＋」と「ー」だけではなく割り算、引き算、クリアボタンを作りました</p>
+        <p>10.掛け算と割り算がプログラミング記号と人間で認識の違いがあるため前回学んだ「if,else」で「＊」を表記では「×」にしたり工夫しました。</p>
+        <p>11.ボタンのカラーを交互に変えて可愛く工夫しました。</p>
+        <p>12.100の倍数になったらメッセージが出るように工夫しました。</p>
+    </div>
+    <script>
+        // JavaScript
+        let result = document.getElementById("result");
+        let inputString = ''; // 入力した文字
+        let displayValue = ''; // 表示されている文字
+        let resultValue = ''; // 結果
+        let operator = ''; // 計算記号
+        // displayValue(表示されている文字) operator(計算記号) inputString(入力した文字) resultValue(結果)
+        function input(data) {
+            inputString += data
+            displayValue += data
+            result.value = displayValue
+            if (data === "+") {
+                operator = '+';
+            } else if (data === "-") {
+                operator = "-"
+            } else if (data === "×") {
+                operator = "×"
+            } else if (data === "÷") {
+                operator = "÷"
+            }
+        }
+// 計算機を可愛くしたくて調べているうちに「new function」というのを見つけましたが、機能的に「eval」と似ていたので別の方法で考えて作りました。「eval」がダメなら「new function」もダメですよね。
+        function submit() {
+            let splited = inputString.split(operator)
+            let no1 = parseFloat(splited[0])
+            let no2 = parseFloat(splited[1])
+
+            console.log(operator, no1, no2);
+
+
+            if (operator === "+") {
+                resultValue = no1 + no2
+            } else if (operator === "-") {
+                resultValue = no1 - no2
+            } else if (operator === "×") {
+                resultValue = no1 * no2
+            } else if (operator === "÷") {
+                resultValue = no1 / no2
+            }
+
+            if (Number(resultValue) % 100 === 0) {
+                alert("100の倍数だよん：）")
+            }
+
+            result.value = resultValue
+            displayValue = resultValue
+            inputString = resultValue.toString()
+
+            const history = document.getElementById("history")
+            history.value = `${no1} ${operator} ${no2} = ${resultValue}`
+        }
+
+        function clearvalue() {
+            console.log()
+            inputString = ""
+            displayValue = ""
+            resultValue = ""
+            operator = ""
+            document.getElementById("result").value = ""
+            document.getElementById("history").value = ""
+        }
+        function change1(){
+        const input1 = document.getElementById("input1");
+        const box1 = document.getElementById("box1");
+        box1.style.color = input1.value;
+      }
+
+    </script>
+</body>
+
+</html>
